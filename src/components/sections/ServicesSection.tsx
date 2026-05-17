@@ -24,6 +24,7 @@ export default function ServicesSection() {
     gsap.registerPlugin(ScrollTrigger);
 
     const tls: gsap.core.Timeline[] = [];
+    const componentScrollTriggers: any[] = [];
 
     rowsRef.current.forEach((row, i) => {
       if (!row) return;
@@ -34,6 +35,10 @@ export default function ServicesSection() {
           start: "top 90%",
         }
       });
+
+      if (tl.scrollTrigger) {
+        componentScrollTriggers.push(tl.scrollTrigger);
+      }
 
       // Animate the line drawing on scroll
       const line = row.querySelector(".service-line");
@@ -65,7 +70,7 @@ export default function ServicesSection() {
       tls.push(tl);
 
       // ScrollTrigger to toggle active class as user scrolls past
-      ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: row,
         start: "top 60%",   // Triggers when row enters the top 60% of the screen
         end: "bottom 40%", // Triggers when row leaves the bottom 40% of the screen
@@ -78,11 +83,13 @@ export default function ServicesSection() {
           setActiveIndex(prev => prev === i ? null : prev);
         }
       });
+
+      componentScrollTriggers.push(st);
     });
 
     return () => {
       tls.forEach(tl => tl.kill());
-      ScrollTrigger.getAll().forEach(st => st.kill());
+      componentScrollTriggers.forEach(st => st.kill());
     };
   }, []);
 
