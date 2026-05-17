@@ -16,26 +16,58 @@ const services = [
 
 export default function ServicesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const linesRef = useRef<(HTMLDivElement | null)[]>([]);
+  const rowsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     if (!containerRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    linesRef.current.forEach((line, i) => {
-      if (!line) return;
-      gsap.fromTo(line, 
-        { width: "0%" },
-        { 
-          width: "100%", 
-          duration: 1.5, 
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: line,
-            start: "top 90%",
-          }
+    rowsRef.current.forEach((row, i) => {
+      if (!row) return;
+
+      const line = row.querySelector(".service-line");
+      const title = row.querySelector(".service-title");
+      const desc = row.querySelector(".service-desc");
+      const bottomLine = row.querySelector(".service-bottom-line");
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: "top 85%",
+          toggleActions: "play none none none"
         }
-      );
+      });
+
+      if (line) {
+        tl.fromTo(line, 
+          { width: "0%" },
+          { width: "100%", duration: 1.2, ease: "power3.out" }
+        );
+      }
+
+      if (title) {
+        tl.fromTo(title,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+          "-=1.0"
+        );
+      }
+
+      if (desc) {
+        tl.fromTo(desc,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+          "-=0.6"
+        );
+      }
+
+      if (bottomLine) {
+        tl.fromTo(bottomLine,
+          { width: "0%" },
+          { width: "100%", duration: 1.2, ease: "power3.out" },
+          "-=1.0"
+        );
+      }
     });
   }, []);
 
@@ -51,10 +83,13 @@ export default function ServicesSection() {
 
       <div className="flex flex-col">
         {services.map((service, i) => (
-          <div key={i} className="group relative w-full hover-target cursor-pointer">
+          <div 
+            key={i} 
+            ref={el => { rowsRef.current[i] = el; }}
+            className="group relative w-full hover-target cursor-pointer"
+          >
             <div 
-              ref={el => { linesRef.current[i] = el; }} 
-              className="absolute top-0 left-0 h-[1px] bg-[#0D0D0D]/10 w-0"
+              className="absolute top-0 left-0 h-[1px] bg-[#0D0D0D]/10 w-0 service-line"
             />
             
             <div className="max-w-7xl mx-auto px-8 md:px-16 py-12 md:py-16 flex flex-col md:flex-row md:items-center justify-between relative z-10 transition-colors duration-500 group-hover:bg-[#488E5C]">
@@ -66,12 +101,12 @@ export default function ServicesSection() {
                 {service.num}
               </div>
 
-              <h3 className="text-4xl md:text-6xl font-normal max-w-xl relative z-10 transition-all duration-500 group-hover:translate-x-8 text-[#0D0D0D] group-hover:text-white">
+              <h3 className="service-title text-4xl md:text-6xl font-normal max-w-xl relative z-10 transition-all duration-500 group-hover:translate-x-8 text-[#0D0D0D] group-hover:text-white">
                 {service.title}
               </h3>
               
               <div className="mt-6 md:mt-0 max-w-md overflow-hidden relative z-10">
-                <p className="text-base md:text-lg text-gray-700 font-inter opacity-0 translate-y-8 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">
+                <p className="service-desc text-base md:text-lg text-gray-700 font-inter transition-colors duration-500 group-hover:text-white">
                   {service.desc}
                 </p>
               </div>
@@ -81,8 +116,7 @@ export default function ServicesSection() {
             {/* Bottom line for the last item */}
             {i === services.length - 1 && (
               <div 
-                ref={el => { linesRef.current[i + 1] = el; }} 
-                className="absolute bottom-0 left-0 h-[1px] bg-[#0D0D0D]/10 w-0"
+                className="absolute bottom-0 left-0 h-[1px] bg-[#0D0D0D]/10 w-0 service-bottom-line"
               />
             )}
           </div>
