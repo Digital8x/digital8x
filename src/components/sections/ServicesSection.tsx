@@ -23,22 +23,27 @@ export default function ServicesSection() {
     if (!containerRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    const tls: gsap.core.Timeline[] = [];
+
     rowsRef.current.forEach((row, i) => {
       if (!row) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: "top 90%",
+        }
+      });
 
       // Animate the line drawing on scroll
       const line = row.querySelector(".service-line");
       if (line) {
-        gsap.fromTo(line, 
+        tl.fromTo(line, 
           { width: "0%" },
           { 
             width: "100%", 
             duration: 1.2, 
             ease: "power3.out",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 90%",
-            }
           }
         );
       }
@@ -46,19 +51,18 @@ export default function ServicesSection() {
       // Animate the last bottom line on scroll
       const bottomLine = row.querySelector(".service-bottom-line");
       if (bottomLine) {
-        gsap.fromTo(bottomLine,
+        tl.fromTo(bottomLine,
           { width: "0%" },
           { 
             width: "100%", 
             duration: 1.2, 
             ease: "power3.out",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 90%",
-            }
-          }
+          },
+          "<" // Start at the same time as top line
         );
       }
+
+      tls.push(tl);
 
       // ScrollTrigger to toggle active class as user scrolls past
       ScrollTrigger.create({
@@ -75,6 +79,11 @@ export default function ServicesSection() {
         }
       });
     });
+
+    return () => {
+      tls.forEach(tl => tl.kill());
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
   }, []);
 
   return (
