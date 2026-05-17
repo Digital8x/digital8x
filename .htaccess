@@ -1,0 +1,11 @@
+# Disable directory browsing
+DirectoryIndex disabled
+
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Forward all requests to Node.js application running on port 3002
+RewriteRule ^$ http://127.0.0.1:3002/ [P,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:3002/$1 [P,L]
