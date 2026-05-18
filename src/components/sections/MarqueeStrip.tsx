@@ -45,8 +45,8 @@ export default function MarqueeStrip({
   );
 
   return (
-    <div className={`relative w-full overflow-hidden py-8 border-y border-gray-800 ${bg}`} ref={marqueeRef}>
-      <div className="flex text-4xl md:text-6xl font-black tracking-tighter uppercase font-syne">
+    <div className={`relative w-full overflow-hidden py-3 md:py-4 border-y border-gray-800/60 ${bg}`} ref={marqueeRef}>
+      <div className="flex text-lg sm:text-xl md:text-2xl lg:text-3xl font-black tracking-tighter uppercase font-syne">
         {content}
         {content}
       </div>

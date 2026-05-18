@@ -7,16 +7,16 @@ export default function HeroSection() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-[#111111] text-white select-none">
       {/* 1. Fullscreen video background */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-90"
       >
-        <source 
-          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" 
-          type="video/mp4" 
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
+          type="video/mp4"
         />
       </video>
 
@@ -26,7 +26,7 @@ export default function HeroSection() {
       {/* 2. Hero Section Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl pt-24">
         {/* H1 Cinematic Heading */}
-        <h1 
+        <h1
           className="animate-fade-rise text-5xl sm:text-7xl md:text-8xl leading-[0.95] tracking-[-2.46px] font-normal text-white"
           style={{ fontFamily: "'Instrument Serif', serif" }}
         >
