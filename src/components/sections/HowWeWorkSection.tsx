@@ -20,20 +20,26 @@ export default function HowWeWorkSection() {
     if (!containerRef.current || !leftColRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const isMobile = window.innerWidth < 768;
-    if (isMobile) return;
+    // Bulletproof responsive pinning using GSAP matchMedia
+    const mm = gsap.matchMedia();
 
-    // Pin left column on desktop
-    const pin = ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: leftColRef.current,
-      pinSpacing: false,
+    mm.add("(min-width: 768px)", () => {
+      // Pin left column on desktop
+      const pin = ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        pin: leftColRef.current,
+        pinSpacing: false,
+      });
+
+      return () => {
+        pin.kill();
+      };
     });
 
     return () => {
-      pin.kill();
+      mm.revert();
     };
   }, []);
 

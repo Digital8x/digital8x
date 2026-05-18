@@ -30,11 +30,11 @@ export default function PortfolioSection() {
               {/* Blurred placeholder background since we don't have images */}
               <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 blur-sm transform scale-110 transition-transform duration-700 group-hover:scale-100"></div>
               
-              {/* Overlay reveal */}
-              <div className="absolute inset-0 bg-[#111111]/80 clip-path-inset-bottom transition-all duration-700 ease-[cubic-bezier(0.7,0,0.2,1)] group-hover:clip-path-inset-full"></div>
+              {/* Overlay reveal - Visible by default on mobile, hover-revealed on desktop */}
+              <div className="absolute inset-0 bg-[#111111]/85 clip-path-inset-full md:clip-path-inset-bottom transition-all duration-700 ease-[cubic-bezier(0.7,0,0.2,1)] md:group-hover:clip-path-inset-full"></div>
               
-              {/* Content */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white opacity-0 transform translate-y-8 transition-all duration-700 delay-100 group-hover:opacity-100 group-hover:translate-y-0">
+              {/* Content - Visible by default on mobile, animate-revealed on desktop */}
+              <div className="absolute inset-0 p-8 flex flex-col justify-end text-white opacity-100 transform translate-y-0 md:opacity-0 md:translate-y-8 transition-all duration-700 delay-100 md:group-hover:opacity-100 md:group-hover:translate-y-0">
                 <span className="text-[#488E5C] font-bold tracking-widest uppercase text-sm mb-2">{p.result}</span>
                 <h3 className="text-3xl font-normal">{p.name}</h3>
               </div>

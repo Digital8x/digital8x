@@ -18,7 +18,7 @@ export default function Footer() {
           </p>
         </div>
         
-        <div className="flex flex-col md:flex-row gap-8 md:gap-16">
+        <div className="grid grid-cols-2 gap-x-12 gap-y-8 md:flex md:flex-row md:gap-16 w-full md:w-auto">
           <div className="flex flex-col gap-2 text-sm uppercase tracking-widest">
             <h4 className="text-gray-500 font-bold mb-2">Menu</h4>
             <a href="/" className="hover:text-[#488E5C] transition-colors hover-target text-white">Home</a>
